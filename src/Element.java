@@ -21,6 +21,10 @@ public abstract class Element {
 	public boolean hasNotifications() {
 		return !notifications.isEmpty();
 	}
+	
+	public void addNotification(Notification n){
+		notifications.add(n);
+	}
 
 	public void setActive(boolean active) {
 		this.active = active;
@@ -83,6 +87,12 @@ public abstract class Element {
 	}
 
 	public static class Notification{
+		
+		public final String message;
+
+		public Notification(String message) {
+			this.message = message;
+		}
 		
 	}
 
