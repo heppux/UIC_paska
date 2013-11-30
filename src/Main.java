@@ -8,7 +8,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		System.out.println("Welcome!");
+		System.out.println("Welcome to the Intelligent Home Control System!");
 
 		displayStatus();
 
@@ -48,11 +48,11 @@ public class Main {
 	}
 
 	private static void displayStatus() {
-		System.out.println("-------------");
+		System.out.println("------------------");
 		System.out.println("HOME STATUS: ");
 		listNotifications();
 		listActives();
-		System.out.println("-------------");
+		System.out.println("------------------");
 	}
 
 	private static String execute(String command) {
