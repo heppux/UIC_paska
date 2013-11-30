@@ -10,28 +10,59 @@ public class Main {
 		
 		System.out.println("Welcome!");
 		
-		listNotifications();
-		listActives();
+		displayStatus();
 		
 		String command = getCommand();
-		while(!command.equalsIgnoreCase("exit"))
-			execute(command);
+		while(!command.equalsIgnoreCase("exit")) {
+			if(command.equalsIgnoreCase("status")) 
+				displayStatus();
+			else
+				System.out.println(execute(command));
+			command = getCommand();
+		}
 		
 		System.out.println("Goodbye!");
 	}
 
-	private static void execute(String command) {
-		// TODO Auto-generated method stub
+	private static void displayStatus() {
+		listNotifications();
+		listActives();
+	}
+
+	private static String execute(String command) {
+		String[] split = command.split(" ");
+		if(split.length >= 2)
+		for (Element e : elements) {
+			if(e.getName().equalsIgnoreCase(split[0])){
+				Element.Interaction in = null;
+				for (Element.Interaction i : Element.Interaction.values()) {
+					if(i.name().equalsIgnoreCase(split[1]))
+						in = i;
+				}
+				
+				if(in == null && !e.getInteractions().contains(in))
+					return "Invalid interaction command: " + split[1];
+				else {
+					if(split.length >= 3){
+						in.setParam(split[2]);
+					}
+					String ret = e.execute(in);
+					in.setParam(null);
+					return ret;
+				}
+			}
+		}
+		return "Invalid command: " + command;
 	}
 
 	private static String getCommand() {
-		return s.next();
+		return s.nextLine();
 	}
 
 	private static void listActives() {
 		for (Element e : elements) {
 			if(e.isActive()){
-				System.out.println(e.getName() + " is active.");
+				System.out.println(e.getName() + " " + e.getStatusVerb() + " active.");
 			}
 		}
 	}
