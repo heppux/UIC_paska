@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Element {
 
-	public static Element SAUNA = new Sauna(new Notification("SAUNA IS ON FIRE"));
+	public static Element SAUNA = new Sauna();
 	public static Element ALARM = new Alarm(new Notification("ALARM TRIGGERED AT 03:00"));
 	public static Element LIGHTS = new Lights();
 	
@@ -38,11 +38,13 @@ public abstract class Element {
 	}
 
 	public String listNotifications() {
-		StringBuilder b = new StringBuilder("*** ");
+		StringBuilder b = new StringBuilder();
 		for (Notification n : notifications) {
+			b.append("*** ");
 			b.append(n.message);
+			if(notifications.indexOf(n) != notifications.size() - 1)
+				b.append("\n");
 		}
-		b.append(" ***");
 		return b.toString();
 	}
 
@@ -64,8 +66,12 @@ public abstract class Element {
 		@Override
 		public String execute(Interaction in) {
 			if (in == Interaction.ON) {
+				if(super.active) {
+					return this.getName() + " is already ON";
+				}
 				if(in.param == null){
 					super.active = true;
+					this.clearNotifications();
 					return this.getName() + " is now " + in.name(); 
 				}
 				
@@ -79,7 +85,10 @@ public abstract class Element {
 				}catch(NumberFormatException e){
 					return "Invalid schedule time: " + in.param;
 				}
-				return this.getName() + " scheduled to go ON in " + hours + " hours " + minutes + " minutes";
+				this.clearNotifications();
+				String n = this.getName() + " scheduled to go ON in " + hours + " hours " + minutes + " minutes";
+				super.notifications.add(new Notification(n));
+				return n;
 			} else if (in == Interaction.OFF) {
 				super.active = false;
 				return this.getName() + " is now " + in.name(); 
@@ -90,6 +99,15 @@ public abstract class Element {
 
 		public String getName() {
 			return "Sauna";
+		}
+
+		@Override
+		public String listHelp() {
+			StringBuilder b = new StringBuilder("Available commands for sauna:\n");
+			b.append("sauna on\n");
+			b.append("sauna on hours:minutes\n");
+			b.append("sauna off\n");
+			return b.toString();
 		}
 
 	}
@@ -117,6 +135,14 @@ public abstract class Element {
 				return null;
 			}
 		}
+
+		@Override
+		public String listHelp() {
+			StringBuilder b = new StringBuilder("Available commands for alarm:\n");
+			b.append("alarm on\n");
+			b.append("alarm off");
+			return b.toString();
+		}
 	}
 
 	public static class Lights extends Element {
@@ -132,6 +158,14 @@ public abstract class Element {
 		@Override
 		public String getStatusVerb() {
 			return "are";
+		}
+
+		@Override
+		public String listHelp() {
+			StringBuilder b = new StringBuilder("Available commands for lights:\n");
+			b.append("lights on\n");
+			b.append("lights off");
+			return b.toString();
 		}
 
 	}
@@ -169,5 +203,7 @@ public abstract class Element {
 	public void clearNotifications() {
 		this.notifications.clear();
 	}
+
+	public abstract String listHelp(); 
 
 }

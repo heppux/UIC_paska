@@ -16,14 +16,25 @@ public class Main {
 		while (!command.equalsIgnoreCase("exit")) {
 			if (command.equalsIgnoreCase("status"))
 				displayStatus();
-			if(command.equals("reset")){
+			else if(command.equalsIgnoreCase("reset"))
 				System.out.println(clearNotifications());
+			else if(command.equalsIgnoreCase("help")){
+				displayHelp();
 			}else
 				System.out.println(execute(command));
 			command = getCommand();
 		}
 
 		System.out.println("Goodbye!");
+	}
+
+	private static void displayHelp() {
+		System.out.println("Available commands:");
+		System.out.println("status - displays home status");
+		System.out.println("reset - resets notifications");
+		System.out.println("alarm - controls burglar alarm");
+		System.out.println("sauna - controls sauna");
+		System.out.println("lights - controls lights");
 	}
 
 	private static String clearNotifications() {
@@ -66,7 +77,13 @@ public class Main {
 						return ret;
 					}
 				}
+		} else if(split.length == 1) {
+			for (Element e : elements) {
+				if (e.getName().equalsIgnoreCase(split[0])) {
+					return e.listHelp();
+				}
 			}
+		}
 		return "Invalid command: " + command;
 	}
 
