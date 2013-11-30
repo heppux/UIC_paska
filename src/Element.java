@@ -4,9 +4,13 @@ import java.util.List;
 
 public abstract class Element {
 
-	public static Element SAUNA = new Sauna();
-	public static Element ALARM = new Alarm();
+	public static Element SAUNA = new Sauna(new Notification("SAUNA IS ON FIRE"));
+	public static Element ALARM = new Alarm(new Notification("ALARM TRIGGERED AT 03:00"));
 	public static Element LIGHTS = new Lights();
+	
+	public Element(Notification... n){
+		this.notifications.addAll(Arrays.asList(n));
+	}
 
 	private boolean active = true;
 
@@ -34,10 +38,11 @@ public abstract class Element {
 	}
 
 	public String listNotifications() {
-		StringBuilder b = new StringBuilder(getName() + ": ");
+		StringBuilder b = new StringBuilder("*** ");
 		for (Notification n : notifications) {
-			b.append(n);
+			b.append(n.message);
 		}
+		b.append(" ***");
 		return b.toString();
 	}
 
@@ -52,7 +57,8 @@ public abstract class Element {
 		private int hours = 0;
 		private int minutes = 0;
 
-		private Sauna() {
+		private Sauna(Notification... n) {
+			super(n);
 		}
 
 		@Override
@@ -76,7 +82,7 @@ public abstract class Element {
 				return this.getName() + " scheduled to go ON in " + hours + " hours " + minutes + " minutes";
 			} else if (in == Interaction.OFF) {
 				super.active = false;
-				return this.getName() + " set to: " + in.name(); 
+				return this.getName() + " is now " + in.name(); 
 			} else {
 				return null;
 			}
@@ -90,18 +96,33 @@ public abstract class Element {
 
 	public static class Alarm extends Element {
 
-		private Alarm() {
+		private Alarm(Notification... n) {
+			super(n);
 		}
 
 		public String getName() {
 			return "Alarm";
 		}
 
+
+		@Override
+		public String execute(Interaction in) {
+			if (in == Interaction.ON) {
+				super.active = true;
+				return this.getName() + " will be " + in.name() + " in 30 seconds."; 
+			} else if (in == Interaction.OFF) {
+				super.active = false;
+				return this.getName() + " " + this.getStatusVerb() + " now " + in.name(); 
+			} else {
+				return null;
+			}
+		}
 	}
 
 	public static class Lights extends Element {
 
-		private Lights() {
+		private Lights(Notification... n) {
+			super(n);
 		}
 
 		public String getName() {
@@ -143,6 +164,10 @@ public abstract class Element {
 		} else {
 			return null;
 		}
+	}
+
+	public void clearNotifications() {
+		this.notifications.clear();
 	}
 
 }
