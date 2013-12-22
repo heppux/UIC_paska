@@ -1,5 +1,0 @@
-Java JRE 1.6 tarvitaan:
-http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase6-419409.html#jre-6-oth-JPR
-
-Ohjelma käynnistetään ajamalla tässä bin-kansiossa komento:
-java Main
