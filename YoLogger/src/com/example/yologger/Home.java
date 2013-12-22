@@ -2,9 +2,9 @@ package com.example.yologger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -37,6 +37,7 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	List<Fragment> mFragments;
+	EventListFragment eventList;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -55,10 +56,11 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mFragments = new ArrayList<Fragment>();
-		mFragments.add(new DummyListFragment());
-		mFragments.add(new DummyListFragment());
-		mFragments.add(new DummyListFragment());
-		
+		eventList = new EventListFragment();
+		mFragments.add(eventList);
+		mFragments.add(new EventListFragment());
+		mFragments.add(new EventListFragment());
+
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
 				getSupportFragmentManager(), mFragments);
 
@@ -88,25 +90,25 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 					.setTabListener(this));
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.home, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		addActivity();
 		return true;
-//	    switch (item.getItemId()) {
-//	        case R.menu.home:
-//	            addActivity();
-//	            return true;
-//	        default:
-//	            return super.onOptionsItemSelected(item);
-//	    }
+		// switch (item.getItemId()) {
+		// case R.menu.home:
+		// addActivity();
+		// return true;
+		// default:
+		// return super.onOptionsItemSelected(item);
+		// }
 	}
 
 	private void addActivity() {
@@ -130,6 +132,18 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 	@Override
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
+		eventList.refresh();
+	}
+
+	private boolean skipResume = true;
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (!skipResume) {
+			eventList.refresh();
+		} else
+			skipResume = false;
 	}
 
 	/**
@@ -137,7 +151,7 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 	 * one of the sections/tabs/pages.
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-		
+
 		List<Fragment> fragmentList;
 
 		public SectionsPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
@@ -147,10 +161,10 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 
 		@Override
 		public Fragment getItem(int position) {
-			Fragment fragment = fragmentList.get(position);        
-	        return fragment;
+			Fragment fragment = fragmentList.get(position);
+			return fragment;
 		}
-		
+
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
@@ -195,41 +209,45 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 					.findViewById(R.id.section_label);
 			dummyTextView.setText(Integer.toString(getArguments().getInt(
 					ARG_SECTION_NUMBER)));
-//			final ListView listview = (ListView) rootView.findViewById(R.id.activity_list);
-//		    String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-//		        "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-//		        "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-//		        "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-//		        "Android", "iPhone", "WindowsMobile" };
-//		    List<String> list = Arrays.asList(values);
-//		    listview.setAdapter(new ArrayAdapter<String>(getActivity(),
-//					android.R.layout.simple_list_item_activated_1, list));
-		    
+			// final ListView listview = (ListView)
+			// rootView.findViewById(R.id.activity_list);
+			// String[] values = new String[] { "Android", "iPhone",
+			// "WindowsMobile",
+			// "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+			// "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
+			// "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
+			// "Android", "iPhone", "WindowsMobile" };
+			// List<String> list = Arrays.asList(values);
+			// listview.setAdapter(new ArrayAdapter<String>(getActivity(),
+			// android.R.layout.simple_list_item_activated_1, list));
+
 			return rootView;
 		}
 	}
-	
-	public static class DummyListFragment extends ListFragment {
 
-		public DummyListFragment() {
+	public static class EventListFragment extends ListFragment {
+
+		private View rootView;
+
+		public EventListFragment() {
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		        Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_home_dummy,
+				Bundle savedInstanceState) {
+			rootView = inflater.inflate(R.layout.fragment_home_dummy,
 					container, false);
-			final ListView listview = (ListView) rootView.findViewById(android.R.id.list);
-		    String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-		        "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-		        "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-		        "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-		        "Android", "iPhone", "WindowsMobile" };
-		    List<String> list = Arrays.asList(values);
-		    listview.setAdapter(new ArrayAdapter<String>(getActivity(),
-			android.R.layout.simple_list_item_1, list));
+			refresh();
 			return rootView;
-			
+
+		}
+
+		public void refresh() {
+			final ListView listview = (ListView) rootView
+					.findViewById(android.R.id.list);
+			Collections.reverse(Content.events);
+			listview.setAdapter(new ArrayAdapter<String>(getActivity(),
+					android.R.layout.simple_list_item_1, Content.events));
 		}
 	}
 }

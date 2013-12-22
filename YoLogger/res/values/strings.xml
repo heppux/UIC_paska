@@ -10,5 +10,7 @@
     <string name="no_data">No data</string>
     <string name="title_activity_add_event">Add Event</string>
     <string name="hello_world">Hello world!</string>
+    <string name="submit_button">Submit</string>
+    <string name="event_prompt">What do?</string>
 
 </resources>
