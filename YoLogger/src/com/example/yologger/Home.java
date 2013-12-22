@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +18,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -92,6 +94,24 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.home, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		addActivity();
+		return true;
+//	    switch (item.getItemId()) {
+//	        case R.menu.home:
+//	            addActivity();
+//	            return true;
+//	        default:
+//	            return super.onOptionsItemSelected(item);
+//	    }
+	}
+
+	private void addActivity() {
+		Intent intent = new Intent(this, AddEventActivity.class);
+		startActivity(intent);
 	}
 
 	@Override

@@ -8,5 +8,7 @@
     <string name="title_section2">Statistics</string>
     <string name="title_section3">Social</string>
     <string name="no_data">No data</string>
+    <string name="title_activity_add_event">Add Event</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
