@@ -1,13 +1,18 @@
 package com.example.yologger;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.example.yologger.Content.Event;
+
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,8 +64,8 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 		mFragments = new ArrayList<Fragment>();
 		eventList = new EventListFragment();
 		mFragments.add(eventList);
-		mFragments.add(new EventListFragment());
-		mFragments.add(new EventListFragment());
+		mFragments.add(new DummySectionFragment());
+		mFragments.add(new DummySectionFragment());
 
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
 				getSupportFragmentManager(), mFragments);
@@ -203,12 +209,9 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_home_dummy,
+			View rootView = inflater.inflate(R.layout.fragment_dummy,
 					container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+
 			// final ListView listview = (ListView)
 			// rootView.findViewById(R.id.activity_list);
 			// String[] values = new String[] { "Android", "iPhone",
@@ -245,9 +248,54 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 		public void refresh() {
 			final ListView listview = (ListView) rootView
 					.findViewById(android.R.id.list);
-			Collections.reverse(Content.events);
-			listview.setAdapter(new ArrayAdapter<String>(getActivity(),
-					android.R.layout.simple_list_item_1, Content.events));
+			Collections.sort(Content.events);
+			listview.setAdapter(new EventListArrayAdapter(getActivity().getBaseContext(),
+					Content.events.toArray(new Event[0])));
+		}
+	}
+	
+	public static class EventListArrayAdapter extends ArrayAdapter<Event> {
+		private Context context;
+		private Event[] values;
+
+		public EventListArrayAdapter(Context context, Event[] values) {
+		    super(context, R.layout.eventlist, values);
+		    this.context = context;
+		    this.values = values;
+		  }
+		
+		@Override
+		  public View getView(int position, View convertView, ViewGroup parent) {
+		    LayoutInflater inflater = (LayoutInflater) context
+		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		    View rowView = inflater.inflate(R.layout.eventlist, parent, false);
+		    TextView below = (TextView) rowView.findViewById(R.id.eventLineBelow);
+		    TextView above = (TextView) rowView.findViewById(R.id.eventLineAbove);
+		    TextView right = (TextView) rowView.findViewById(R.id.eventLineRight);
+//		    TextView textView2 = (TextView) rowView.findViewById(R.id.eventLine2);
+		    ImageView imageView = (ImageView) rowView.findViewById(R.id.eventicon);
+		    above.setText(values[position].description);
+		    right.setText(formatDuration(values[position].durationMinutes));
+		    below.setText(formatDate(values[position].date));
+		    String s = values[position].category;
+		    if (s.startsWith("dummy")) {
+		      imageView.setImageResource(R.drawable.ic_plus_small);
+		    } else {
+		      imageView.setImageResource(R.drawable.ic_launcher);
+		    }
+
+		    return rowView;
+		  }
+
+		private String formatDate(Date date) {
+			SimpleDateFormat f = new SimpleDateFormat("HH:mm dd.MM.yyyy");
+			return f.format(date);
+		}
+
+		private String formatDuration(int durationMinutes) {
+			String hours = durationMinutes / 60 > 0 ? durationMinutes / 60 + " hrs " : "";
+			String mins = durationMinutes % 60 > 0 ? durationMinutes % 60 + " min" : "";
+			return hours + mins;
 		}
 	}
 }
