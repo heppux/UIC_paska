@@ -11,9 +11,9 @@ public class Content {
 	public static final HashMap<String, Category> categories = new HashMap<String, Category>();
 	
 	static{
-		categories.put("Exercise", new Category("Exercise", R.drawable.ic_launcher));
-		categories.put("Study", new Category("Study", R.drawable.ic_launcher));
-		categories.put("Freetime", new Category("Freetime", R.drawable.ic_launcher));
+		categories.put("Exercise", new Category("Exercise", R.drawable.sport_icon));
+		categories.put("Study", new Category("Study", R.drawable.study_icon));
+		categories.put("Freetime", new Category("Freetime", R.drawable.freetime_icon));
 	}
 	
 	public static class Event implements Comparable<Event>{

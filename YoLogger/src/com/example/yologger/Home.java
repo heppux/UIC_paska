@@ -65,7 +65,7 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 		mFragments = new ArrayList<Fragment>();
 		eventList = new EventListFragment();
 		mFragments.add(eventList);
-		mFragments.add(new DummySectionFragment());
+		mFragments.add(new StatisticsFragment());
 		mFragments.add(new DummySectionFragment());
 
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
@@ -252,6 +252,24 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 			Collections.sort(Content.events);
 			listview.setAdapter(new EventListArrayAdapter(getActivity().getBaseContext(),
 					Content.events.toArray(new Event[0])));
+		}
+	}
+	
+	public static class StatisticsFragment extends Fragment {
+		
+		private View rootView;
+		
+		
+		public StatisticsFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			rootView = inflater.inflate(R.layout.statistics,
+					container, false);
+			return rootView;
+
 		}
 	}
 	

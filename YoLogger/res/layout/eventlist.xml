@@ -32,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/eventLineBelow"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toRightOf="@id/eventicon"
         android:gravity="center_vertical"

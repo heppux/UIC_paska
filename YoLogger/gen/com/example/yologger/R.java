@@ -228,13 +228,17 @@ containing a value of this type.
     }
     public static final class drawable {
         public static final int cell_shape=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int ic_plus_small=0x7f020002;
-        public static final int selector=0x7f020003;
-        public static final int social_media_icons=0x7f020004;
+        public static final int freetime_icon=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int ic_plus_small=0x7f020003;
+        public static final int pie_chart=0x7f020004;
+        public static final int selector=0x7f020005;
+        public static final int social_media_icons=0x7f020006;
+        public static final int sport_icon=0x7f020007;
+        public static final int study_icon=0x7f020008;
     }
     public static final class id {
-        public static final int action_settings=0x7f040027;
+        public static final int action_settings=0x7f040028;
         public static final int alignBounds=0x7f040002;
         public static final int alignMargins=0x7f040003;
         public static final int bottom=0x7f040005;
@@ -258,8 +262,9 @@ containing a value of this type.
         public static final int fill_horizontal=0x7f04000b;
         public static final int fill_vertical=0x7f040009;
         public static final int horizontal=0x7f040000;
+        public static final int imageView1=0x7f040027;
         public static final int left=0x7f040006;
-        public static final int menu_add=0x7f040028;
+        public static final int menu_add=0x7f040029;
         public static final int note_list=0x7f040021;
         public static final int pager=0x7f040020;
         public static final int right=0x7f040007;
@@ -284,6 +289,7 @@ containing a value of this type.
         public static final int eventlist=0x7f030004;
         public static final int fragment_dummy=0x7f030005;
         public static final int fragment_home_dummy=0x7f030006;
+        public static final int statistics=0x7f030007;
     }
     public static final class menu {
         public static final int add_event=0x7f090000;
