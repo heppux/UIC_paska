@@ -49,9 +49,11 @@ public class AddEventActivity extends Activity {
 			ArrayList<String> entries = new ArrayList<String>();
 			entries.addAll(Content.categories.keySet());
 			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, entries);
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				R.layout.dropdown, entries);
+//			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			dropdown.setAdapter(dataAdapter);
+			ImageView i = (ImageView) findViewById(R.id.social_media_images);
+			i.setAlpha(60);
 //			
 //			TableRow row = (TableRow) findViewById(R.id.category_row);
 //			row.setBackgroundColor(getResources().getColor(R.color.grey_color));
@@ -71,9 +73,9 @@ public class AddEventActivity extends Activity {
 		CheckBox check = (CheckBox) findViewById(R.id.share_check);
 		ImageView i = (ImageView) findViewById(R.id.social_media_images);
 		if(check.isChecked()){
-			i.setVisibility(View.VISIBLE);
+			i.setAlpha(255);
 		} else {
-			i.setVisibility(View.INVISIBLE);
+			i.setAlpha(60);
 		}
 	}
 	
@@ -115,18 +117,11 @@ public class AddEventActivity extends Activity {
 	
 	public void submitEvent(View view){
 		TextView t = (TextView) findViewById(R.id.event_text);
-		if(durationMinutes == 0){
-			TextView hourInput = (TextView) findViewById(R.id.hourInput);
-			TextView minuteInput = (TextView) findViewById(R.id.minuteInput);
-			int hours = !hourInput.getText().toString().isEmpty() ? Integer.parseInt(hourInput.getText().toString()) : 0;
-			int mins = !minuteInput.getText().toString().isEmpty() ? Integer.parseInt(minuteInput.getText().toString()) : 0;
-			durationMinutes = hours * 60 + mins;
-		}
-		String desc = t.getText().toString();
+		String desc = t.getText().toString().trim();
 		if(durationMinutes == 0)
-			displayAlert("Event duration not set!");
+			displayAlert("You forgot to set the duration!");
 		else if(desc.isEmpty())
-			displayAlert("Event description not set!");
+			displayAlert("You forgot to describe the activity!");
 		else {
 		Content.events.add(new Event(desc, new Date(), durationMinutes, Content.categories.get("Exercise")));
 		
