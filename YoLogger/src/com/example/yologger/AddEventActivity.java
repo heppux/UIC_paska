@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class AddEventActivity extends Activity {
@@ -42,6 +43,13 @@ public class AddEventActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		initDropdownMenu();
+	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		Toast.makeText(getApplicationContext(), "Activity logged!",
+				   Toast.LENGTH_LONG).show();
 	}
 	
 	 public void initDropdownMenu() {
