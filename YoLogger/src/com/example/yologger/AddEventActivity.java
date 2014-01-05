@@ -14,12 +14,15 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -62,6 +65,16 @@ public class AddEventActivity extends Activity {
          mTimePicker = new DurationPickerDialog(this, null, 0, 0);
          mTimePicker.setTitle("Select Duration");
          mTimePicker.show();
+	}
+	
+	public void shareSelected(View view){
+		CheckBox check = (CheckBox) findViewById(R.id.share_check);
+		ImageView i = (ImageView) findViewById(R.id.social_media_images);
+		if(check.isChecked()){
+			i.setVisibility(View.VISIBLE);
+		} else {
+			i.setVisibility(View.INVISIBLE);
+		}
 	}
 	
 	public void changeDuration(int hours,int minutes){

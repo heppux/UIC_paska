@@ -43,108 +43,140 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true" >
 
-<!--         <TableRow -->
-<!--             android:id="@+id/tableRow1" -->
-<!--             android:layout_width="wrap_content" -->
-<!--             android:layout_height="wrap_content"  -->
-<!--             android:background="#FFFFFF"> -->
+        <!-- <TableRow -->
+        <!-- android:id="@+id/tableRow1" -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:background="#FFFFFF"> -->
 
-<!--             <TextView -->
-<!--                 android:id="@+id/event_prompt" -->
-<!--                 android:layout_width="wrap_content" -->
-<!--                 android:layout_height="wrap_content" -->
-<!--                 android:text="@string/event_prompt" -->
-<!--                 android:textAppearance="?android:attr/textAppearanceLarge" /> -->
-<!--              </TableRow> -->
 
-            <TableRow
-                android:id="@+id/tableRow3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/cell_shape">
+        <!-- <TextView -->
+        <!-- android:id="@+id/event_prompt" -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:text="@string/event_prompt" -->
+        <!-- android:textAppearance="?android:attr/textAppearanceLarge" /> -->
+        <!-- </TableRow> -->
 
-                <EditText
-                    android:id="@+id/event_text"
-                    android:layout_weight="100"
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/cell_shape" >
+      <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textMultiLine" 
-                    android:hint="Describe the activity">
+                    android:orientation="vertical"
+                    android:layout_weight="100" >
+            <EditText
+                android:id="@+id/event_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_weight="100"
+                android:ems="10"
+                android:hint="Describe the activity"
+                android:inputType="textMultiLine" >
 
-                    <requestFocus />
-                </EditText>
-            </TableRow>
-            <TableRow
-                android:id="@+id/category_row"
-                 android:layout_height="50dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/cell_shape" >
+                <requestFocus android:layout_width="wrap_content" />
 
-                <TextView
-                    android:id="@+id/duration_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_weight="30"
-                    android:text="Category"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </EditText>
+               <ImageView android:src="@android:drawable/ic_menu_camera" android:layout_width="30dp"
+                   android:layout_marginBottom="2dp"
+                   android:layout_marginLeft="8dp"
+                   android:layout_height="35dp"
+                   />
+                    </LinearLayout>
+        </TableRow>
 
-                <Spinner
-                    android:id="@+id/dropdown_menu"
-                    android:layout_width="150dp"
-                    android:layout_height="40dp" />
+        <TableRow
+            android:id="@+id/category_row"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/cell_shape" >
 
-            </TableRow>
+            <TextView
+                android:id="@+id/duration_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="30"
+                android:text="Category"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TableRow
-                android:id="@+id/duration_row"
+            <Spinner
+                android:id="@+id/dropdown_menu"
+                android:layout_width="150dp"
+                android:layout_height="40dp" 
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/duration_row"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/selector"
+            android:onClick="durationSelect" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="25dp"
+                android:layout_weight="30"
+                android:text="Duration"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/duration_display"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/selector"
-                android:onClick="durationSelect" >
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="15 min"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#A0A0A0" />
+        </TableRow>
 
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="0dp"
-                    android:layout_weight="30"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:text="Duration"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/cell_shape" >
 
-                <TextView
-                    android:id="@+id/duration_display"
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15 min" 
-                    android:textColor="#A0A0A0"
-                    android:layout_marginTop="8dp"
-android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow4"
+                    android:orientation="vertical" >
+                
+                <CheckBox
+                android:id="@+id/share_check"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:background="@drawable/cell_shape">
-                 <CheckBox
-        android:id="@+id/share_check"
-        android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginLeft="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/share_checkbox" 
-        />
-            </TableRow>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="5dp"
+                android:onClick="shareSelected"
+                android:text="@string/share_checkbox" />
+
+               <ImageView  android:id="@+id/social_media_images" android:src="@drawable/social_media_icons" android:layout_width="150dp"
+                   android:layout_marginBottom="2dp"
+                   android:layout_marginLeft="8dp"
+                   android:layout_height="35dp"
+                   android:visibility="invisible"
+                   />
+
+                </LinearLayout>
+
+        </TableRow>
     </TableLayout>
 
 </RelativeLayout>

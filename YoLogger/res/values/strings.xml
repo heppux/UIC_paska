@@ -11,12 +11,11 @@
     <string name="title_activity_add_event">Add Event</string>
     <string name="hello_world">Hello world!</string>
     <string name="submit_button">Log</string>
-    <string name="event_prompt">What do?</string>
     <string name="quarter_hour_label">15 min</string>
     <string name="half_hour_label">30 min</string>
     <string name="hour_label">1 hr</string>
     <string name="custom_label">Custom</string>
-    <string name="share_checkbox">Share</string>
+    <string name="share_checkbox">Share to social</string>
     <string name="category_label">Category</string>
     <string name="duration_label">Duration</string>
     
