@@ -1,6 +1,8 @@
 package com.example.yologger;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.example.yologger.Content.Event;
 
@@ -8,15 +10,22 @@ import android.opengl.Visibility;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.support.v4.app.NavUtils;
 
 public class AddEventActivity extends Activity {
@@ -28,7 +37,68 @@ public class AddEventActivity extends Activity {
 		setContentView(R.layout.activity_add_event);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		initDropdownMenu();
 	}
+	
+	 public void initDropdownMenu() {
+		 	
+			Spinner dropdown = (Spinner) findViewById(R.id.dropdown_menu);
+			ArrayList<String> entries = new ArrayList<String>();
+			entries.addAll(Content.categories.keySet());
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, entries);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			dropdown.setAdapter(dataAdapter);
+//			
+//			TableRow row = (TableRow) findViewById(R.id.category_row);
+//			row.setBackgroundColor(getResources().getColor(R.color.grey_color));
+//			
+//			row = (TableRow) findViewById(R.id.duration_row);
+//			row.setBackgroundColor(getResources().getColor(R.color.grey_color));
+		  }
+	 
+	public void durationSelect(View view){
+		 TimePickerDialog mTimePicker;
+         mTimePicker = new DurationPickerDialog(this, null, 0, 0);
+         mTimePicker.setTitle("Select Duration");
+         mTimePicker.show();
+	}
+	
+	public void changeDuration(int hours,int minutes){
+		TextView durationDisplay = (TextView) findViewById(R.id.duration_display);
+		String d = Home.EventListArrayAdapter.formatDuration(minutes + hours * 60);
+		durationDisplay.setText(d);
+		durationMinutes = minutes + hours * 60;
+	}
+	
+	 public class DurationPickerDialog extends TimePickerDialog {
+
+		    public DurationPickerDialog(Context context, int theme,
+		            OnTimeSetListener callBack, int hour, int minute) {
+		        super(context, theme, callBack, hour, minute, true);
+		        updateTitle(hour, minute);
+		    }
+
+		    public DurationPickerDialog(Context context, OnTimeSetListener callBack,
+		            int hour, int minute) {
+		        super(context, callBack, hour, minute, true);
+		        updateTitle(hour, minute);
+		    }
+
+		    @Override
+		    public void onTimeChanged(TimePicker view, int hour, int minute) {
+		        super.onTimeChanged(view, hour, minute);
+		        updateTitle(hour, minute);
+		        changeDuration(hour, minute);
+		    }
+
+		    public void updateTitle(int hour, int minute) {
+		        setTitle("Duration: " + Home.EventListArrayAdapter.formatDuration(minute + hour * 60));
+		    }
+
+		 
+		}
+		 
 	
 	public void submitEvent(View view){
 		TextView t = (TextView) findViewById(R.id.event_text);
@@ -45,7 +115,7 @@ public class AddEventActivity extends Activity {
 		else if(desc.isEmpty())
 			displayAlert("Event description not set!");
 		else {
-		Content.events.add(new Event(desc, new Date(), durationMinutes, "dummy"));
+		Content.events.add(new Event(desc, new Date(), durationMinutes, Content.categories.get("Exercise")));
 		
 		finish();}
 	}
@@ -65,63 +135,6 @@ public class AddEventActivity extends Activity {
 		  });
 		AlertDialog d = b.create();
 		d.show();
-	}
-
-	private boolean customDurationVisible = false;
-	public void durationValueChange(View view) {
-		boolean checked = ((RadioButton) view).isChecked();
-		if(checked)
-		switch (view.getId()) {
-		case R.id.radio_quarter_hour:
-			this.durationMinutes = 15;
-			if(customDurationVisible)
-				hideCustomDuration();
-			break;
-		case R.id.radio_half_hour:
-			this.durationMinutes = 30;
-			if(customDurationVisible)
-				hideCustomDuration();
-			break;
-		case R.id.radio_hour:
-			this.durationMinutes = 60;
-			if(customDurationVisible)
-				hideCustomDuration();
-			break;
-		case R.id.radio_custom:
-			this.durationMinutes = 0;
-			showCustomDuration();
-			break;
-		}
-	}
-
-	private void hideCustomDuration() {
-		this.customDurationVisible = false;
-		TextView hourInput = (TextView) findViewById(R.id.hourInput);
-		TextView minuteInput = (TextView) findViewById(R.id.minuteInput);
-		TextView hourLabel = (TextView) findViewById(R.id.hourLabel);
-		TextView minuteLabel = (TextView) findViewById(R.id.minuteLabel);
-		Button button = (Button) findViewById(R.id.submitButton);
-		RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) button.getLayoutParams();
-		params.addRule(RelativeLayout.BELOW, R.id.radioGroup1);
-		hourInput.setVisibility(View.GONE);
-		minuteInput.setVisibility(View.GONE);
-		hourLabel.setVisibility(View.GONE);
-		minuteLabel.setVisibility(View.GONE);
-	}
-	
-	private void showCustomDuration() {
-		this.customDurationVisible = true;
-		TextView hourInput = (TextView) findViewById(R.id.hourInput);
-		TextView minuteInput = (TextView) findViewById(R.id.minuteInput);
-		TextView hourLabel = (TextView) findViewById(R.id.hourLabel);
-		TextView minuteLabel = (TextView) findViewById(R.id.minuteLabel);
-		Button button = (Button) findViewById(R.id.submitButton);
-		RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) button.getLayoutParams();
-		params.addRule(RelativeLayout.BELOW, R.id.minuteLabel);
-		hourInput.setVisibility(View.VISIBLE);
-		minuteInput.setVisibility(View.VISIBLE);
-		hourLabel.setVisibility(View.VISIBLE);
-		minuteLabel.setVisibility(View.VISIBLE);
 	}
 
 	/**

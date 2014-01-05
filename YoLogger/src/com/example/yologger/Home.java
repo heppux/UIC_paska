@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.example.yologger.Content.Category;
 import com.example.yologger.Content.Event;
 
 import android.app.ActionBar;
@@ -277,25 +278,22 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 		    above.setText(values[position].description);
 		    right.setText(formatDuration(values[position].durationMinutes));
 		    below.setText(formatDate(values[position].date));
-		    String s = values[position].category;
-		    if (s.startsWith("dummy")) {
-		      imageView.setImageResource(R.drawable.ic_plus_small);
-		    } else {
-		      imageView.setImageResource(R.drawable.ic_launcher);
-		    }
+		    Category c = values[position].category;
+		    imageView.setImageResource(c.resId);
 
 		    return rowView;
 		  }
 
-		private String formatDate(Date date) {
+		public static String formatDate(Date date) {
 			SimpleDateFormat f = new SimpleDateFormat("HH:mm dd.MM.yyyy");
 			return f.format(date);
 		}
 
-		private String formatDuration(int durationMinutes) {
+		public static String formatDuration(int durationMinutes) {
 			String hours = durationMinutes / 60 > 0 ? durationMinutes / 60 + " hrs " : "";
 			String mins = durationMinutes % 60 > 0 ? durationMinutes % 60 + " min" : "";
 			return hours + mins;
 		}
 	}
+
 }
