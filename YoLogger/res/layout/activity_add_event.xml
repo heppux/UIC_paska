@@ -37,14 +37,6 @@
         android:onClick="submitEvent"
         android:text="@string/submit_button" />
 
-    <CheckBox
-        android:id="@+id/share_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/submitButton"
-        android:layout_alignLeft="@+id/submitButton"
-        android:text="@string/share_checkbox" />
-
     <TableLayout
         android:id="@+id/tableLayout1"
         android:layout_width="match_parent"
@@ -112,6 +104,7 @@
                 android:id="@+id/duration_row"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/selector"
                 android:onClick="durationSelect" >
 
@@ -140,7 +133,17 @@ android:textAppearance="?android:attr/textAppearanceMedium" />
             <TableRow
                 android:id="@+id/tableRow4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="50dp"
+                android:background="@drawable/cell_shape">
+                 <CheckBox
+        android:id="@+id/share_check"
+        android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/share_checkbox" 
+        />
             </TableRow>
     </TableLayout>
 
