@@ -1,6 +1,7 @@
 package com.example.yologger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class AddEventActivity extends Activity {
 			Spinner dropdown = (Spinner) findViewById(R.id.dropdown_menu);
 			ArrayList<String> entries = new ArrayList<String>();
 			entries.addAll(Content.categories.keySet());
+			Collections.sort(entries);
 			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 				R.layout.dropdown, entries);
 //			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -117,13 +119,15 @@ public class AddEventActivity extends Activity {
 	
 	public void submitEvent(View view){
 		TextView t = (TextView) findViewById(R.id.event_text);
+		Spinner s = (Spinner) findViewById(R.id.dropdown_menu);
+		String c = (String) s.getSelectedItem();
 		String desc = t.getText().toString().trim();
 		if(durationMinutes == 0)
 			displayAlert("You forgot to set the duration!");
 		else if(desc.isEmpty())
 			displayAlert("You forgot to describe the activity!");
 		else {
-		Content.events.add(new Event(desc, new Date(), durationMinutes, Content.categories.get("Exercise")));
+		Content.events.add(new Event(desc, new Date(), durationMinutes, Content.categories.get(c)));
 		
 		finish();}
 	}
