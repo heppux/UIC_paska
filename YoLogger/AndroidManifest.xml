@@ -30,6 +30,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="Home" />
         </activity>
+        <activity
+            android:name="com.example.yologger.CategoryActivity"
+            android:label="@string/title_activity_category"
+            android:parentActivityName="com.example.yologger.Home" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.yologger.Home" />
+        </activity>
     </application>
 
 </manifest>

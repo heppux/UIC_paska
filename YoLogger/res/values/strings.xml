@@ -18,7 +18,6 @@
     <string name="share_checkbox">Share to social</string>
     <string name="category_label">Category</string>
     <string name="duration_label">Duration</string>
-    
-
+    <string name="title_activity_category">CategoryActivity</string>
 
 </resources>

@@ -3,35 +3,26 @@ package com.example.yologger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
-import com.example.yologger.Content.Event;
-
-import android.opengl.Visibility;
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.support.v4.app.NavUtils;
+
+import com.example.yologger.Content.Event;
 
 public class AddEventActivity extends Activity {
 
@@ -91,7 +82,7 @@ public class AddEventActivity extends Activity {
 	
 	public void changeDuration(int hours,int minutes){
 		TextView durationDisplay = (TextView) findViewById(R.id.duration_display);
-		String d = Home.EventListArrayAdapter.formatDuration(minutes + hours * 60);
+		String d = Home.formatDuration(minutes + hours * 60);
 		durationDisplay.setText(d);
 		durationMinutes = minutes + hours * 60;
 	}
@@ -118,7 +109,7 @@ public class AddEventActivity extends Activity {
 		    }
 
 		    public void updateTitle(int hour, int minute) {
-		        setTitle("Duration: " + Home.EventListArrayAdapter.formatDuration(minute + hour * 60));
+		        setTitle("Duration: " + Home.formatDuration(minute + hour * 60));
 		    }
 
 		 
@@ -135,9 +126,9 @@ public class AddEventActivity extends Activity {
 		else if(desc.isEmpty())
 			displayAlert("You forgot to describe the activity!");
 		else {
-		Content.events.add(new Event(desc, new Date(), durationMinutes, Content.categories.get(c)));
-		
-		finish();}
+		Content.addEvent(new Event(desc, new Date(), durationMinutes, Content.categories.get(c)));
+		finish();
+		}
 	}
 	
 	private void displayAlert(String message) {
