@@ -13,7 +13,8 @@
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/submitButton" >
+        android:layout_above="@+id/submitButton"
+        android:isScrollContainer="false"  >
 
         <TableLayout
             android:id="@+id/tableLayout1"
@@ -41,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/cell_shape" >
+                android:background="@drawable/cell_shape_grey" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -78,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/cell_shape" >
+                android:background="@drawable/cell_shape_grey" >
 
                 <TextView
                     android:id="@+id/duration_label"
@@ -133,7 +134,7 @@
                 android:id="@+id/tableRow4"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:background="@drawable/cell_shape" >
+                android:background="@drawable/cell_shape_grey" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"

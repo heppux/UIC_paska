@@ -314,7 +314,7 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					Intent i = new Intent(view.getContext(), CategoryActivity.class);
-					i.putExtra("category", categories.get(position));
+					i.putExtra("category", categories.get(position).name);
 					startActivity(i);
 				}
 				

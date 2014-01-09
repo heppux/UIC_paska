@@ -32,40 +32,32 @@ public class AddEventActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_event);
 		// Show the Up button in the action bar.
+		
 		setupActionBar();
 		initDropdownMenu();
 	}
 	
-	@Override
-	public void onStop(){
-		super.onStop();
-		Toast.makeText(getApplicationContext(), "Activity logged!",
-				   Toast.LENGTH_LONG).show();
-	}
-	
 	 public void initDropdownMenu() {
 		 	
+		 
 			Spinner dropdown = (Spinner) findViewById(R.id.dropdown_menu);
 			ArrayList<String> entries = new ArrayList<String>();
 			entries.addAll(Content.categories.keySet());
 			Collections.sort(entries);
 			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 				R.layout.dropdown, entries);
-//			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			dropdown.setAdapter(dataAdapter);
 			ImageView i = (ImageView) findViewById(R.id.social_media_images);
 			i.setAlpha(60);
-//			
-//			TableRow row = (TableRow) findViewById(R.id.category_row);
-//			row.setBackgroundColor(getResources().getColor(R.color.grey_color));
-//			
-//			row = (TableRow) findViewById(R.id.duration_row);
-//			row.setBackgroundColor(getResources().getColor(R.color.grey_color));
+			
+			String name = (String) getIntent().getSerializableExtra("category");
+			if(name != null)
+				dropdown.setSelection(entries.indexOf(name));
 		  }
 	 
 	public void durationSelect(View view){
 		 TimePickerDialog mTimePicker;
-         mTimePicker = new DurationPickerDialog(this, null, 0, 0);
+         mTimePicker = new EventDurationPickerDialog(this, null, 0, 0);
          mTimePicker.setTitle("Select Duration");
          mTimePicker.show();
 	}
@@ -87,15 +79,15 @@ public class AddEventActivity extends Activity {
 		durationMinutes = minutes + hours * 60;
 	}
 	
-	 public class DurationPickerDialog extends TimePickerDialog {
+	 public class EventDurationPickerDialog extends TimePickerDialog {
 
-		    public DurationPickerDialog(Context context, int theme,
+		    public EventDurationPickerDialog(Context context, int theme,
 		            OnTimeSetListener callBack, int hour, int minute) {
 		        super(context, theme, callBack, hour, minute, true);
 		        updateTitle(hour, minute);
 		    }
 
-		    public DurationPickerDialog(Context context, OnTimeSetListener callBack,
+		    public EventDurationPickerDialog(Context context, OnTimeSetListener callBack,
 		            int hour, int minute) {
 		        super(context, callBack, hour, minute, true);
 		        updateTitle(hour, minute);
@@ -128,6 +120,8 @@ public class AddEventActivity extends Activity {
 		else {
 		Content.addEvent(new Event(desc, new Date(), durationMinutes, Content.categories.get(c)));
 		finish();
+		Toast.makeText(getApplicationContext(), "Activity logged!",
+				   Toast.LENGTH_LONG).show();
 		}
 	}
 	
