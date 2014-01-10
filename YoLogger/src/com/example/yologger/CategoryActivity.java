@@ -106,8 +106,8 @@ public class CategoryActivity extends Activity {
 		percentage.setText(p);
 		
 		statisticsGraph.chartColors = new int[]{
-				Color.parseColor("#CCFFCC"),
-				Color.parseColor("#FF9898")
+				Color.parseColor("#00AA00"),
+				Color.parseColor("#FFFFFF")
 				};
 		statisticsGraph.invalidate();
 	}

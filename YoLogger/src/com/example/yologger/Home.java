@@ -11,6 +11,7 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -347,11 +348,11 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 		public Float[] degrees;
 		
 		public int[] chartColors = { 
-				Color.parseColor("#66FF66"),
-				Color.parseColor("#66FFCC"), 
-				Color.parseColor("#99CCFF"),
-				Color.parseColor("#FFCCFF"),
-				Color.parseColor("#FFCC99")};
+				Color.parseColor("#ED0011"),
+				Color.parseColor("#004B9F"), 
+				Color.parseColor("#E4F000"),
+				Color.parseColor("#5D93CF"),
+				Color.parseColor("#F66F79")};
 
 		private int x;
 
@@ -386,27 +387,33 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 			int width = height;
 			int pixelsBetween = (int)(width / 1.5) ;
 			
+			int x = this.width + 40;
+			int y = this.y + 10;
+			if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+				x = this.x;
+				y = this.height + 30;
+			}
 			int index = 0;
 			for (Category c : Content.getSortedCategories()) {
 				style.setColor(chartColors[index]);
 				style.setStyle(Paint.Style.FILL);
-				canvas.drawRect(this.width + 40, 
-						30 + index * (height + pixelsBetween), 
-						this.width + 40 + width, 
-						30 + height + index * (height + pixelsBetween), 
+				canvas.drawRect(x, 
+						y + index * (height + pixelsBetween), 
+						x + width, 
+						y + height + index * (height + pixelsBetween), 
 						style);
 				style.setColor(Color.BLACK);
 				style.setStyle(Paint.Style.STROKE);
-				canvas.drawRect(this.width + 40, 
-						30 + index * (height + pixelsBetween), 
-						this.width + 40 + width, 
-						30 + height + index * (height + pixelsBetween), 
+				canvas.drawRect(x, 
+						y + index * (height + pixelsBetween), 
+						x + width, 
+						y + height + index * (height + pixelsBetween), 
 						style);
 				style.setTextSize(height);
 				style.setStyle(Paint.Style.FILL_AND_STROKE);
 				canvas.drawText(c.name + " (" + (int)(degrees[index] / 360 * 100) + "%)",
-						this.width + 50 + width, 
-						30 + height * (float) 0.85 + index * (height + pixelsBetween), 
+						x + 10 + width, 
+						y + height * (float) 0.85 + index * (height + pixelsBetween), 
 						style);
 				index++;
 			}
