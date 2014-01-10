@@ -461,18 +461,18 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 			below.setText((minutesUsed * 100) / c.goal
 					+ "% of this week's goal");
 			int co = 0;
-			if (c.goal == -1) {
+			if (c.goal <= 0) {
 				below.setText("");
 			} else if ((double) minutesUsed / c.goal < 0.2) {
-				co = Color.parseColor("#FFD1D1");
+				co = Color.parseColor("#CCEECC");
 			} else if ((double) minutesUsed / c.goal < 0.4) {
-				co = Color.parseColor("#FFD6AD");
+				co = Color.parseColor("#99DD99");
 			} else if ((double) minutesUsed / c.goal < 0.6) {
-				co = Color.parseColor("#FFFFD6");
+				co = Color.parseColor("#66CC66");
 			} else if ((double) minutesUsed / c.goal < 0.8) {
-				co = Color.parseColor("#EBFFD6");
+				co = Color.parseColor("#33BB33");
 			} else {
-				co = Color.parseColor("#D6FFD6");
+				co = Color.parseColor("#00AA00");
 			}
 			
 			rowView.setBackgroundColor(co);
