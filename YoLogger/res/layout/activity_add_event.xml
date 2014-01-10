@@ -14,7 +14,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/submitButton"
-        android:isScrollContainer="false"  >
+        >
 
         <TableLayout
             android:id="@+id/tableLayout1"
@@ -62,7 +62,6 @@
                         android:hint="Describe the activity"
                         android:inputType="textMultiLine" >
 
-                        <requestFocus android:layout_width="wrap_content" />
                     </EditText>
 
                     <ImageView

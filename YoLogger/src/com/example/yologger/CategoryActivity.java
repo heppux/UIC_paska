@@ -41,7 +41,7 @@ public class CategoryActivity extends Activity {
 		TextView percentage = (TextView) findViewById(R.id.percentage_text);
 		
 		LinearLayout chart = (LinearLayout) findViewById(R.id.chart_layout);
-		statisticsGraph = new StatisticsGraph(this, 20, 20, 240, 240, false);
+		statisticsGraph = new StatisticsGraph(this, 20, 20, 330, 330, false);
 		chart.addView(statisticsGraph);
 		if(c.goal > 0){
 			goalTime.setText(Home.formatDuration(c.goal));
