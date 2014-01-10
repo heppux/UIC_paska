@@ -11,9 +11,11 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,11 +24,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -277,13 +282,25 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			rootView = inflater.inflate(R.layout.statistics, container, false);
-			statisticsGraph = new StatisticsGraph(rootView.getContext(), 20, 20, 180, 180, true);
 			LinearLayout linear = (LinearLayout) rootView
-					.findViewById(R.id.chart_layout);
+					.findViewById(R.id.statistics_chart_layout);
+//			WindowManager wm = (WindowManager) rootView.getContext().getSystemService(Context.WINDOW_SERVICE);
+//			Display display = wm.getDefaultDisplay();
+//			Point size = new Point();
+//			display.getSize(size);
+//			double width = convertPixelsToDp(size.x, rootView.getContext());
+			statisticsGraph = new StatisticsGraph(rootView.getContext(), 20, 20, 270, 270, true);
 			linear.addView(statisticsGraph);
 			refresh();
 			return rootView;
 		}
+//		
+//		public static float convertPixelsToDp(float px, Context context){
+//		    Resources resources = context.getResources();
+//		    DisplayMetrics metrics = resources.getDisplayMetrics();
+//		    float dp = px / (metrics.densityDpi / 160f);
+//		    return dp;
+//		}
 
 		private Float[] getCategoryData() {
 			List<Float> temp = new ArrayList<Float>();
@@ -364,29 +381,31 @@ public class Home extends FragmentActivity implements ActionBar.TabListener {
 		}
 
 		private void drawLabels(Canvas canvas) {
-			int height = 25;
+			
+			int height = (int)(this.height / 8.5);
 			int width = height;
-			int pixelsBetween = 10;
+			int pixelsBetween = (int)(width / 1.5) ;
 			
 			int index = 0;
 			for (Category c : Content.getSortedCategories()) {
 				style.setColor(chartColors[index]);
 				style.setStyle(Paint.Style.FILL);
-				canvas.drawRect(220, 
+				canvas.drawRect(this.width + 40, 
 						30 + index * (height + pixelsBetween), 
-						220 + width, 
+						this.width + 40 + width, 
 						30 + height + index * (height + pixelsBetween), 
 						style);
 				style.setColor(Color.BLACK);
 				style.setStyle(Paint.Style.STROKE);
-				canvas.drawRect(220, 
+				canvas.drawRect(this.width + 40, 
 						30 + index * (height + pixelsBetween), 
-						220 + width, 
+						this.width + 40 + width, 
 						30 + height + index * (height + pixelsBetween), 
 						style);
 				style.setTextSize(height);
+				style.setStyle(Paint.Style.FILL_AND_STROKE);
 				canvas.drawText(c.name + " (" + (int)(degrees[index] / 360 * 100) + "%)",
-						230 + width, 
+						this.width + 50 + width, 
 						30 + height * (float) 0.85 + index * (height + pixelsBetween), 
 						style);
 				index++;

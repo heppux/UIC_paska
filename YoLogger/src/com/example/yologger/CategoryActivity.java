@@ -3,6 +3,7 @@ package com.example.yologger;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -134,8 +135,8 @@ public class CategoryActivity extends Activity {
 	
 	 public class CategoryGoalPickerDialog extends TimePickerDialog {
 
-		    private int minute;
-			private int hour;
+		    public int minute;
+		    public int hour;
 
 			public CategoryGoalPickerDialog(Context context, int theme,
 		            OnTimeSetListener callBack, int hour, int minute) {
